@@ -6,7 +6,7 @@
 using namespace cl::sycl;
 using namespace std;
 
-using ITEM_T = int;
+using ITEM_T = long long int;
 
 class Event {
 public:
@@ -39,10 +39,10 @@ Event run_kernel(queue &q, size_t num_items, size_t num_threads_per_block,
   event kernel_event = q.submit([&](handler &cgh) {
     auto localRange = range<1>(num_threads_per_block);
     auto iscankernel = [=](nd_item<1> it) {
-      int localX = it.get_local_id(0);
-      int globalX = it.get_global_id(0);
+      T localX = it.get_local_id(0);
+      T globalX = it.get_global_id(0);
 
-      int x = inclusive_scan_over_group(it.get_group(), localX, cl::sycl::plus<>());
+      T x = inclusive_scan_over_group(it.get_group(), localX, cl::sycl::plus<>());
       if (x > num_items * 2) {
         DEVICE_WRITE_DUMMY[0] = x;
       }
@@ -108,6 +108,8 @@ void copy(queue &q, size_t bytes, size_t num_threads_per_block, method m) {
        << get_submission_ms(result.kernel_event) << ",ms,"
        << mbytes / get_submission_ms(result.kernel_event) * 1e3 / 1024
        << ",GB/s,"
+       << num_items / get_submission_ms(result.kernel_event) * 1e3 / 1024 / 1024 / 1024
+       << ",Giga-items/s,"
        << "\n";
 }
 
@@ -129,6 +131,8 @@ int main(int argc, char *argv[]) {
        << ",ms,"
        << "kerenel(sub)"
        << ",GB/s,"
+       << "kernel(sub)"
+       << ",Giga-items/s,"
        << "\n";
   for (size_t th = 1; th <= 512; th = th << 1) {
     copy(q, 1024 * 1024 * 1024, th, IScan);
