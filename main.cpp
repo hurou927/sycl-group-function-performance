@@ -35,39 +35,47 @@ Event run_kernel(queue &q, size_t num_items, size_t num_threads_per_block,
                  method m) {
 
   T *DEVICE_WRITE_DUMMY = static_cast<T *>(malloc_device(sizeof(T), q));
-
   auto kernel_start = std::chrono::steady_clock::now();
   event kernel_event = q.submit([&](handler &cgh) {
     auto localRange = range<1>(num_threads_per_block);
-    auto kernel = [=](nd_item<1> it) {
+    auto iscankernel = [=](nd_item<1> it) {
       int localX = it.get_local_id(0);
       int globalX = it.get_global_id(0);
 
-      int x;
-      switch (m) {
-      case IScan:
-
-        x = inclusive_scan_over_group(it.get_group(), localX,
-                                      cl::sycl::plus<>());
-        break;
-      case EScan:
-        x = exclusive_scan_over_group(it.get_group(), localX,
-                                      cl::sycl::plus<>());
-        break;
-      case Reduce:
-        x = exclusive_scan_over_group(it.get_group(), localX,
-                                      cl::sycl::plus<>());
-        break;
-      default:
-        x = reduce_over_group(it.get_group(), localX, cl::sycl::plus<>());
-        break;
-      }
+      int x = inclusive_scan_over_group(it.get_group(), localX, cl::sycl::plus<>());
       if (x > num_items * 2) {
         DEVICE_WRITE_DUMMY[0] = x;
       }
     };
-    cgh.parallel_for<class pm>(nd_range<1>{range<1>(num_items), localRange},
-                               kernel);
+    auto escankernel = [=](nd_item<1> it) {
+      int localX = it.get_local_id(0);
+      int globalX = it.get_global_id(0);
+
+      int x = exclusive_scan_over_group(it.get_group(), localX, cl::sycl::plus<>());
+      if (x > num_items * 2) {
+        DEVICE_WRITE_DUMMY[0] = x;
+      }
+    };
+    auto reducekernel = [=](nd_item<1> it) {
+      int localX = it.get_local_id(0);
+      int globalX = it.get_global_id(0);
+
+      int x = reduce_over_group(it.get_group(), localX, cl::sycl::plus<>());
+      if (x > num_items * 2) {
+        DEVICE_WRITE_DUMMY[0] = x;
+      }
+    };
+    switch (m) {
+      case IScan:
+        cgh.parallel_for<class iscan>(nd_range<1>{range<1>(num_items), localRange}, iscankernel);
+        break;
+      case EScan:
+        cgh.parallel_for<class escan>(nd_range<1>{range<1>(num_items), localRange}, escankernel);
+        break;
+      case Reduce:
+        cgh.parallel_for<class reduce>(nd_range<1>{range<1>(num_items), localRange}, reducekernel);
+        break;
+    }
   });
   kernel_event.wait();
   auto kernel_end = std::chrono::steady_clock::now();
@@ -82,9 +90,12 @@ Event run_kernel(queue &q, size_t num_items, size_t num_threads_per_block,
 
 string str(method m) {
   switch (m) {
-   case IScan: return "inclusive_scan_over_group";
-   case EScan: return "exclusive_scan_over_group";
-   case Reduce: return "reduce_over_group";
+  case IScan:
+    return "inclusive_scan_over_group";
+  case EScan:
+    return "exclusive_scan_over_group";
+  case Reduce:
+    return "reduce_over_group";
   }
 }
 
@@ -92,8 +103,9 @@ void copy(queue &q, size_t bytes, size_t num_threads_per_block, method m) {
   size_t mbytes = bytes / 1024 / 1024;
   size_t num_items = bytes / sizeof(ITEM_T);
   auto result = run_kernel<ITEM_T>(q, num_items, num_threads_per_block, m);
-  cout << str(m) << "," << num_threads_per_block << ",threads," << result.kernel_elapesed_ms
-       << ",ms," << get_submission_ms(result.kernel_event) << ",ms,"
+  cout << str(m) << "," << num_threads_per_block << ",threads,"
+       << result.kernel_elapesed_ms << ",ms,"
+       << get_submission_ms(result.kernel_event) << ",ms,"
        << mbytes / get_submission_ms(result.kernel_event) * 1e3 / 1024
        << ",GB/s,"
        << "\n";
