@@ -49,36 +49,38 @@ $ ./main
 Type = Int
 ```tsv
 method                     thread/block  threads  kernel(sub)  ms  kerenel(exe)  ms  kerenel(sub)  GB/s  kernel(sub)  Giga-items/s
-inclusive_scan_over_group  1             threads  1398.15      ms  1392.01       ms  0.718383      GB/s  0.179596     Giga-items/s
-inclusive_scan_over_group  2             threads  699.245      ms  696.322       ms  1.43612       GB/s  0.35903      Giga-items/s
-inclusive_scan_over_group  4             threads  349.676      ms  348.188       ms  2.87201       GB/s  0.718002     Giga-items/s
-inclusive_scan_over_group  8             threads  175.115      ms  174.328       ms  5.73633       GB/s  1.43408      Giga-items/s
-inclusive_scan_over_group  16            threads  84.5527      ms  84.1494       ms  11.8836       GB/s  2.97091      Giga-items/s
-inclusive_scan_over_group  32            threads  48.1878      ms  47.9441       ms  20.8576       GB/s  5.2144       Giga-items/s
-inclusive_scan_over_group  64            threads  58.0519      ms  57.7728       ms  17.3092       GB/s  4.32729      Giga-items/s
-inclusive_scan_over_group  128           threads  77.0518      ms  76.6957       ms  13.0385       GB/s  3.25964      Giga-items/s
-inclusive_scan_over_group  256           threads  115.033      ms  114.518       ms  8.73227       GB/s  2.18307      Giga-items/s
-inclusive_scan_over_group  512           threads  212.821      ms  211.907       ms  4.71906       GB/s  1.17976      Giga-items/s
-exclusive_scan_over_group  1             threads  1513.89      ms  1507.73       ms  0.66325       GB/s  0.165812     Giga-items/s
-exclusive_scan_over_group  2             threads  757.144      ms  754.026       ms  1.32621       GB/s  0.331553     Giga-items/s
-exclusive_scan_over_group  4             threads  378.762      ms  377.165       ms  2.65136       GB/s  0.662841     Giga-items/s
-exclusive_scan_over_group  8             threads  189.545      ms  188.727       ms  5.29867       GB/s  1.32467      Giga-items/s
-exclusive_scan_over_group  16            threads  90.712       ms  90.2911       ms  11.0753       GB/s  2.76882      Giga-items/s
-exclusive_scan_over_group  32            threads  50.9048      ms  50.6532       ms  19.7421       GB/s  4.93552      Giga-items/s
-exclusive_scan_over_group  64            threads  60.2574      ms  59.9668       ms  16.6759       GB/s  4.16897      Giga-items/s
-exclusive_scan_over_group  128           threads  78.9088      ms  78.5437       ms  12.7318       GB/s  3.18294      Giga-items/s
-exclusive_scan_over_group  256           threads  116.63       ms  116.115       ms  8.61216       GB/s  2.15304      Giga-items/s
-exclusive_scan_over_group  512           threads  214.631      ms  213.717       ms  4.67909       GB/s  1.16977      Giga-items/s
-reduce_over_group          1             threads  1492.87      ms  1486.8        ms  0.672585      GB/s  0.168146     Giga-items/s
-reduce_over_group          2             threads  746.609      ms  743.553       ms  1.34489       GB/s  0.336223     Giga-items/s
-reduce_over_group          4             threads  373.506      ms  371.938       ms  2.68862       GB/s  0.672155     Giga-items/s
-reduce_over_group          8             threads  186.932      ms  186.125       ms  5.37272       GB/s  1.34318      Giga-items/s
-reduce_over_group          16            threads  95.6634      ms  95.2271       ms  10.5012       GB/s  2.6253       Giga-items/s
-reduce_over_group          32            threads  48.519       ms  48.2774       ms  20.7136       GB/s  5.1784       Giga-items/s
-reduce_over_group          64            threads  26.9936      ms  26.8417       ms  37.2555       GB/s  9.31387      Giga-items/s
-reduce_over_group          128           threads  32.3046      ms  32.1296       ms  31.1239       GB/s  7.78098      Giga-items/s
-reduce_over_group          256           threads  42.8165      ms  42.6001       ms  23.4741       GB/s  5.86853      Giga-items/s
-reduce_over_group          512           threads  63.1788      ms  62.8762       ms  15.9043       GB/s  3.97607      Giga-items/s
+inclusive_scan_over_group  1             threads  1338.42      ms  1332.59       ms  0.750416      GB/s  0.187604     Giga-items/s
+inclusive_scan_over_group  2             threads  669.348      ms  666.606       ms  1.50014       GB/s  0.375034     Giga-items/s
+inclusive_scan_over_group  4             threads  334.842      ms  333.451       ms  2.99894       GB/s  0.749735     Giga-items/s
+inclusive_scan_over_group  8             threads  167.62       ms  166.882       ms  5.99225       GB/s  1.49806      Giga-items/s
+inclusive_scan_over_group  16            threads  83.8757      ms  83.4754       ms  11.9796       GB/s  2.99489      Giga-items/s
+inclusive_scan_over_group  32            threads  47.1374      ms  46.9025       ms  21.3208       GB/s  5.33021      Giga-items/s
+inclusive_scan_over_group  64            threads  57.3043      ms  57.0315       ms  17.5342       GB/s  4.38355      Giga-items/s
+inclusive_scan_over_group  128           threads  76.9547      ms  76.5912       ms  13.0563       GB/s  3.26408      Giga-items/s
+inclusive_scan_over_group  256           threads  115.611      ms  115.104       ms  8.68783       GB/s  2.17196      Giga-items/s
+inclusive_scan_over_group  512           threads  214.681      ms  213.77        ms  4.67793       GB/s  1.16948      Giga-items/s
+
+exclusive_scan_over_group  1             threads  1339.33      ms  1333.93       ms  0.749664      GB/s  0.187416     Giga-items/s
+exclusive_scan_over_group  2             threads  669.706      ms  666.986       ms  1.49928       GB/s  0.374821     Giga-items/s
+exclusive_scan_over_group  4             threads  335.097      ms  333.711       ms  2.9966        GB/s  0.749151     Giga-items/s
+exclusive_scan_over_group  8             threads  167.75       ms  167.008       ms  5.98774       GB/s  1.49693      Giga-items/s
+exclusive_scan_over_group  16            threads  85.1111      ms  84.7025       ms  11.806        GB/s  2.95151      Giga-items/s
+exclusive_scan_over_group  32            threads  48.4151      ms  48.1681       ms  20.7606       GB/s  5.19016      Giga-items/s
+exclusive_scan_over_group  64            threads  58.0622      ms  57.7858       ms  17.3053       GB/s  4.32633      Giga-items/s
+exclusive_scan_over_group  128           threads  76.9699      ms  76.6088       ms  13.0533       GB/s  3.26333      Giga-items/s
+exclusive_scan_over_group  256           threads  114.64       ms  114.136       ms  8.76146       GB/s  2.19036      Giga-items/s
+exclusive_scan_over_group  512           threads  213.844      ms  212.947       ms  4.69601       GB/s  1.174        Giga-items/s
+
+reduce_over_group          1             threads  1515.35      ms  1509.26       ms  0.662576      GB/s  0.165644     Giga-items/s
+reduce_over_group          2             threads  757.874      ms  754.791       ms  1.32487       GB/s  0.331218     Giga-items/s
+reduce_over_group          4             threads  379.043      ms  377.458       ms  2.6493        GB/s  0.662326     Giga-items/s
+reduce_over_group          8             threads  189.75       ms  188.933       ms  5.29287       GB/s  1.32322      Giga-items/s
+reduce_over_group          16            threads  98.4998      ms  98.0383       ms  10.2001       GB/s  2.55002      Giga-items/s
+reduce_over_group          32            threads  51.4956      ms  51.245        ms  19.5141       GB/s  4.87852      Giga-items/s
+reduce_over_group          64            threads  27.8433      ms  27.6873       ms  36.1176       GB/s  9.02941      Giga-items/s
+reduce_over_group          128           threads  33.139       ms  32.9626       ms  30.3374       GB/s  7.58435      Giga-items/s
+reduce_over_group          256           threads  43.5404      ms  43.3222       ms  23.0829       GB/s  5.77072      Giga-items/s
+reduce_over_group          512           threads  63.6844      ms  63.3859       ms  15.7764       GB/s  3.94409      Giga-items/s
 ```
 
 Type = long long int
@@ -95,6 +97,7 @@ inclusive_scan_over_group  64            threads  120.611      ms  120.074      
 inclusive_scan_over_group  128           threads  136.889      ms  136.282       ms  7.33773       GB/s  0.917217     Giga-items/s
 inclusive_scan_over_group  256           threads  181.077      ms  180.29        ms  5.54663       GB/s  0.693329     Giga-items/s
 inclusive_scan_over_group  512           threads  274.375      ms  273.215       ms  3.66012       GB/s  0.457515     Giga-items/s
+
 exclusive_scan_over_group  1             threads  721.081      ms  718.112       ms  1.39254       GB/s  0.174068     Giga-items/s
 exclusive_scan_over_group  2             threads  360.805      ms  359.271       ms  2.78341       GB/s  0.347926     Giga-items/s
 exclusive_scan_over_group  4             threads  180.577      ms  179.791       ms  5.562         GB/s  0.69525      Giga-items/s
@@ -105,6 +108,7 @@ exclusive_scan_over_group  64            threads  30.285       ms  30.1164      
 exclusive_scan_over_group  128           threads  39.563       ms  39.3478       ms  25.4144       GB/s  3.1768       Giga-items/s
 exclusive_scan_over_group  256           threads  58.5689      ms  58.2884       ms  17.1561       GB/s  2.14451      Giga-items/s
 exclusive_scan_over_group  512           threads  107.256      ms  106.758       ms  9.367         GB/s  1.17088      Giga-items/s
+
 reduce_over_group          1             threads  731.833      ms  728.827       ms  1.37207       GB/s  0.171509     Giga-items/s
 reduce_over_group          2             threads  366.1        ms  364.574       ms  2.74293       GB/s  0.342866     Giga-items/s
 reduce_over_group          4             threads  183.222      ms  182.443       ms  5.48118       GB/s  0.685147     Giga-items/s
@@ -116,5 +120,3 @@ reduce_over_group          128           threads  16.3145      ms  16.2034      
 reduce_over_group          256           threads  21.5628      ms  21.4313       ms  46.6608       GB/s  5.8326       Giga-items/s
 reduce_over_group          512           threads  31.7909      ms  31.6197       ms  31.6259       GB/s  3.95323      Giga-items/s
 ```
-
-`inclusive_scan_over_group` is slow when computed type is 64-bit integer...?

@@ -40,28 +40,22 @@ Event run_kernel(queue &q, size_t num_items, size_t num_threads_per_block,
     auto localRange = range<1>(num_threads_per_block);
     auto iscankernel = [=](nd_item<1> it) {
       T localX = it.get_local_id(0);
-      T globalX = it.get_global_id(0);
-
       T x = inclusive_scan_over_group(it.get_group(), localX, cl::sycl::plus<>());
-      if (x > num_items * 2) {
+      if (it.get_global_id(0) > num_items * 2) {
         DEVICE_WRITE_DUMMY[0] = x;
       }
     };
     auto escankernel = [=](nd_item<1> it) {
-      int localX = it.get_local_id(0);
-      int globalX = it.get_global_id(0);
-
-      int x = exclusive_scan_over_group(it.get_group(), localX, cl::sycl::plus<>());
-      if (x > num_items * 2) {
+      T localX = it.get_local_id(0);
+      T x = exclusive_scan_over_group(it.get_group(), localX, cl::sycl::plus<>());
+      if (it.get_global_id(0) > num_items * 2) {
         DEVICE_WRITE_DUMMY[0] = x;
       }
     };
     auto reducekernel = [=](nd_item<1> it) {
-      int localX = it.get_local_id(0);
-      int globalX = it.get_global_id(0);
-
-      int x = reduce_over_group(it.get_group(), localX, cl::sycl::plus<>());
-      if (x > num_items * 2) {
+      T localX = it.get_local_id(0);
+      T x = reduce_over_group(it.get_group(), localX, cl::sycl::plus<>());
+      if (it.get_global_id(0) > num_items * 2) {
         DEVICE_WRITE_DUMMY[0] = x;
       }
     };
